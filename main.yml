@@ -23,6 +23,7 @@
      dest: /tmp/BESAgent-9.5.9.62-rhe6.x86_64.rpm
      
 - name: Install Bigfix Client
+  command: "yum install -y /tmp/BESAgent-9.5.9.62-rhe6.x86_64.rpm"
   
 - name: Start the service
   service:
