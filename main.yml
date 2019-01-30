@@ -1,12 +1,4 @@
 ---
-- name: Check for BigFix
-  stat:
-    path: "{{ bigfix_client_conf_dir }}/.ansible_installed"
-    register: bigfix_installed
-
-- include: install.yml
-  when: not bigfix_installed.stat.exists
-
 - name: Download masthead from BigFix Server
   copy:
      src: /bigfix/actionsite.afxm
@@ -30,8 +22,3 @@
     name: besclient
     state: restarted
     enabled: yes
-
-- name: Record the installation
-  file:
-    dest: "{{ bigfix_client_conf_dir }}/.ansible_installed"
-    state: touch
