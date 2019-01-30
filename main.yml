@@ -1,0 +1,36 @@
+---
+
+- name: Load OS specific vars
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}-{{ ansible_architecture }}.yml"
+
+- name: Load OS Family specific vars
+  when: bigfix_client_file_sum is not defined
+  include_vars: "{{ ansible_os_family }}-{{ ansible_distribution_version.split('.')[0] }}-{{ ansible_architecture }}.yml"
+
+- fail:
+    msg: OS could not be determined.
+  when: bigfix_client_file_sum is not defined
+
+- name: Check for BigFix
+  stat:
+    path: "{{ bigfix_client_conf_dir }}/.ansible_installed"
+  register: bigfix_installed
+
+- include: install.yml
+  when: not bigfix_installed.stat.exists
+
+- name: Download masthead from BigFix Server
+  copy:
+     src: /bigfix/actionsite.afxm
+     dest: /etc/opt/BESClient/actionsite.afxm
+   
+- name: Populate Besclient config file
+  copy:
+     src: /bigfix/besclient.config
+     dest: /var/opt/BESClient/besclient.config
+
+- name: Start the service
+  service:
+    name: "{{ bigfix_client_service_name }}"
+    state: restarted
+    enabled: yes
