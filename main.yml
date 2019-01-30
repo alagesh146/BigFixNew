@@ -27,6 +27,11 @@
   
 - name: Start the service
   service:
-    name: "{{ bigfix_client_service_name }}"
+    name: besclient
     state: restarted
     enabled: yes
+
+- name: Record the installation
+  file:
+    dest: "{{ bigfix_client_conf_dir }}/.ansible_installed"
+    state: touch
