@@ -1,4 +1,6 @@
----
+- hosts: all
+  become: yes
+  
 - name: Download masthead from BigFix Server
   copy:
      src: /bigfix/actionsite.afxm
