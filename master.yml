@@ -1,6 +1,6 @@
 - name: BigFix Client Install
-    hosts: all
-    become: yes
+  - hosts: all
+   become: yes
   
 - tasks:
   - name: Download masthead from BigFix Server
