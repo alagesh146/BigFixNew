@@ -1,8 +1,8 @@
-- name: BigFix Client Install
-  - hosts: all
-    become: yes
+
+- hosts: all
+  become: yes
   
- tasks:
+  tasks:
   - name: Download masthead from BigFix Server
     copy:
        src: /bigfix/actionsite.afxm
