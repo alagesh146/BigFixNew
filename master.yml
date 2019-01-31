@@ -1,5 +1,5 @@
 - name: BigFix Client Install
-  - hosts: all
+    hosts: all
     become: yes
   
 - tasks:
