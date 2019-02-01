@@ -1,1 +1,9 @@
 - hosts: all
+  become: yes
+  
+- name: Ensure Bigfix is already installed
+  service:  name: "besclient" state: started  enabled: yes
+  register: bigfix_installed
+  
+- include: install.yml
+  when: not bigfix_installed.stat.exists
